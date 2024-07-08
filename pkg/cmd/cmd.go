@@ -10,10 +10,9 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "fltctl",
 	Short: "fltctl is a convenient flatcar image factory.",
-	Long: `fltctl is a flatcar factorty, it conveniently
-         help you to retrieve a vanilla upstream base image that you can inject with a
-         butane config that suits your need, it automatically transpile that config to the ignition format.`,
-	Run: getImage,
+	Long: `fltctl is a flatcar factorty, it conveniently help you to retrieve
+	a vanilla upstream base image that you can inject with a butane config
+	that suits your need, it automatically transpile that config to the ignition format.`,
 }
 
 func Execute() {
