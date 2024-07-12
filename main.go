@@ -5,11 +5,6 @@ import (
 )
 
 func main() {
-	// VIPER
-	// Check available config file.
-	// if available then load it.
-	// Set config options.
-
 	// COBRA
 	// Parse command line flags.
 	// Override config options from config file.
