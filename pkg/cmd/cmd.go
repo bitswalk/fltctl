@@ -20,11 +20,12 @@ umount the partition, letting you with a golden iso image.`,
 func Execute() {
 	rootCmd.PersistentFlags().StringP("log", "l", "text", "Log format to be used")
 	rootCmd.PersistentFlags().StringP("config", "", "~/.config/fltctl/config.yaml", "fltctl config file to use.")
+	rootCmd.PersistentFlags().StringP("domain", "d", "release.flatcar-linux.net", "fltctl default domain to construct images from.")
 
-	getCmd.LocalFlags().StringP("channel", "c", "stable", "Select the flatcar release channel you want to use.")
-	getCmd.LocalFlags().StringP("type", "t", "production", "Select the flatcar type of release you're looking for.")
-	getCmd.LocalFlags().StringP("arch", "a", "arm64", "Select the flatcar architecture of your image.")
-	getCmd.LocalFlags().StringP("version", "v", "latest", "Select the flatcar version you want to use.")
+	getCmd.Flags().StringP("channel", "c", "stable", "Select the flatcar release channel you want to use.")
+	getCmd.Flags().StringP("type", "t", "production", "Select the flatcar type of release you're looking for.")
+	getCmd.Flags().StringP("arch", "a", "arm64", "Select the flatcar architecture of your image.")
+	getCmd.Flags().StringP("version", "v", "latest", "Select the flatcar version you want to use.")
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
