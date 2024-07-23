@@ -7,7 +7,6 @@ import (
 
 func SetLogger() *slog.Logger {
 
-	// logType, _ := cmd.Flags().GetString("log")
 	logType := "text"
 
 	opts := &slog.HandlerOptions{
