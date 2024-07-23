@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/bitswalk/fltctl/internal/checks"
 	"github.com/spf13/cobra"
 )
 
@@ -17,6 +16,6 @@ var buildCmd = &cobra.Command{
 	Long:  `Build a golden image of your own based on a flatcar upstream image`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Retrieving upstream image.")
-		checks.Check()
+		// checks.Check()
 	},
 }
