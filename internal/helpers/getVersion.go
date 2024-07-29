@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"bufio"
+	"context"
 	"log/slog"
 	"net/http"
 	"strings"
@@ -9,9 +10,9 @@ import (
 	"github.com/bitswalk/fltctl/internal/logs"
 )
 
-var logger = logs.SetLogger()
+func GetVersion(ctx context.Context, endpoint string) map[string]string {
 
-func GetVersion(endpoint string) map[string]string {
+	logger := logs.NewLoggerWithContext(ctx)
 	var versionInfo = make(map[string]string)
 	versionExist, _ := http.Head(endpoint + "version.txt")
 

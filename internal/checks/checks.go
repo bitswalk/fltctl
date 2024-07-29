@@ -1,16 +1,16 @@
 package checks
 
 import (
+	"context"
 	"fmt"
 	"os"
 
 	"github.com/bitswalk/fltctl/internal/logs"
 )
 
-var logger = logs.SetLogger()
+func Check(ctx context.Context, args string, uri string) interface{} {
 
-func Check(args string, uri string) interface{} {
-
+	logger := logs.NewLoggerWithContext(ctx)
 	switch args {
 	case "cache":
 		var tmp = os.TempDir()

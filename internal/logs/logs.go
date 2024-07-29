@@ -1,13 +1,14 @@
 package logs
 
 import (
+	"context"
 	"log/slog"
 	"os"
 )
 
-func SetLogger() *slog.Logger {
+func NewLoggerWithContext(ctx context.Context) *slog.Logger {
 
-	logType := "text"
+	logType := ctx.Value("logger")
 
 	opts := &slog.HandlerOptions{
 		AddSource: false,

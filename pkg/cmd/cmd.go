@@ -8,7 +8,7 @@ import (
 )
 
 var version = "0.0.1"
-
+var scheme = "https"
 var rootCmd = &cobra.Command{
 	Use:     "fltctl",
 	Version: version,

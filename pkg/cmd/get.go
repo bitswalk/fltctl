@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"net/http"
 	"os"
 
@@ -25,12 +26,13 @@ var getCmd = &cobra.Command{
 	Run:   getImage,
 }
 
-var logger = logs.SetLogger()
-var scheme = "https"
-
 // ref: https://dev.to/douglasmakey/optimizing-large-file-transfers-in-linux-with-go-an-exploration-of-tcp-and-syscall-15eo
 func getImage(cmd *cobra.Command, args []string) {
 
+	logType, _ := cmd.Flags().GetString("log")
+
+	ctx := context.WithValue(cmd.Context(), "logger", logType)
+	var logger = logs.NewLoggerWithContext(ctx)
 	// Get command flags values.
 	domain, _ := cmd.Flags().GetString("domain")
 	arch, _ := cmd.Flags().GetString("arch")
@@ -44,7 +46,7 @@ func getImage(cmd *cobra.Command, args []string) {
 	// Check local cache first
 	// If file exist don't do anything except telling user.
 	// Try to create the local cache path and file.
-	checks.Check("cache", uri)
+	checks.Check(ctx, "cache", uri)
 
 	// Verify ressource availability on remote endpoint before calling for the ressource.
 	logger.Info("Checking upstream ressource availability.", "url", url)
@@ -58,7 +60,7 @@ func getImage(cmd *cobra.Command, args []string) {
 	}
 
 	if version == "current" {
-		versionValue := helpers.GetVersion(endpoint)
+		versionValue := helpers.GetVersion(ctx, endpoint)
 		logger.Info("Retrieving latest current release.", "version", versionValue["FLATCAR_VERSION"])
 		os.Exit(0)
 	}
