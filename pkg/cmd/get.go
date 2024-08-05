@@ -50,12 +50,12 @@ func getImage(cmd *cobra.Command, args []string) {
 	// If file exist don't do anything except telling user.
 	if _, err := os.Stat(os.TempDir() + uri); err == nil {
 		logger.Info("Image already exist locally.", "uri", uri, "path", os.TempDir())
+	} else {
+		// When file doesn't exist, try to create the local cache path and file.
+		// Verify ressource availability on remote endpoint before calling for the ressource.
+		logger.Info("Image doesn't exist locally, we'll try to download it.", "uri", uri, "path", os.TempDir())
+		logger.Info("Checking upstream ressource availability.", "url", url)
 	}
-
-	// When file doesn't exist, try to create the local cache path and file.
-	// Verify ressource availability on remote endpoint before calling for the ressource.
-	logger.Info("Image doesn't exist locally, we'll try to download it.", "uri", uri, "path", os.TempDir())
-	logger.Info("Checking upstream ressource availability.", "url", url)
 
 	// Check the release version we download if we request for latest current release.
 	if version == "current" {
