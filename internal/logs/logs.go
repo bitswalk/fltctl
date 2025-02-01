@@ -9,10 +9,23 @@ import (
 func NewLoggerWithContext(ctx context.Context) *slog.Logger {
 
 	logType := ctx.Value("logger")
+	logLevel := ctx.Value("debug")
+	loglvl := new(slog.LevelVar)
+
+	switch logLevel {
+	case "warn":
+		loglvl.Set(slog.LevelWarn)
+	case "error":
+		loglvl.Set(slog.LevelError)
+	case "debug":
+		loglvl.Set(slog.LevelDebug)
+	default:
+		loglvl.Set(slog.LevelInfo)
+	}
 
 	opts := &slog.HandlerOptions{
 		AddSource: false,
-		Level:     slog.LevelInfo,
+		Level:     loglvl,
 	}
 
 	switch logType {

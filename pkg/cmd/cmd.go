@@ -21,9 +21,11 @@ umount the partition, letting you with a golden iso image.`,
 }
 
 func Execute() {
-	rootCmd.PersistentFlags().StringP("log", "l", "text", "Log format to be used")
+	rootCmd.PersistentFlags().StringP("log", "l", "text", "Log format to be used, can be 'text' or 'json'.")
+	rootCmd.PersistentFlags().StringP("debug", "v", "info", "Log level to be used, can be one of 'info' 'warn' 'error' or 'debug'.")
 	rootCmd.PersistentFlags().StringP("config", "", "~/.config/fltctl/config.yaml", "fltctl config file to use.")
 	rootCmd.PersistentFlags().StringP("domain", "d", "release.flatcar-linux.net", "fltctl default domain to construct images from.")
+	rootCmd.CompletionOptions.HiddenDefaultCmd = true
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
