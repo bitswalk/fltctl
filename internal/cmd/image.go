@@ -1,39 +1,36 @@
-package cmd
+package payload
 
 import (
+	"errors"
 	"log/slog"
-
-	"github.com/spf13/cobra"
 )
 
-var scheme = "https"
+func Check(url string) (string, error) {
+	if url == "" {
+		return "", errors.New("empty url")
+	}
+	
+	// Retrieving image hash if image exist before returning the check state.
+	return url, nil
+}
 
-func checkImage(cmd *cobra.Command, args []string) {
-	// Get command flags values.
-	domain, _ := cmd.Flags().GetString("domain")
-	arch, _ := cmd.Flags().GetString("arch")
-	channel, _ := cmd.Flags().GetString("channel")
-	version, _ := cmd.Flags().GetString("version")
-	imgType, _ := cmd.Flags().GetString("type")
-	endpoint := scheme + "://" + channel + "." + domain + "/" + arch + "-usr/" + version + "/"
-	uri := "flatcar_" + imgType + "_iso_image.iso"
-	url := endpoint + uri
-	slog.Info("Checking if image exist remotely.", "url:", url)
+func Locate(uri string) (string, error) {
+	if uri == "" {
+		return "", errors.New("no image name was provided")
+	}
+
+	return uri, nil
 }
 
 // ref: https://dev.to/douglasmakey/optimizing-large-file-transfers-in-linux-with-go-an-exploration-of-tcp-and-syscall-15eo
-func getImage(cmd *cobra.Command, args []string) {
-	// Get command flags values.
-	domain, _ := cmd.Flags().GetString("domain")
-	arch, _ := cmd.Flags().GetString("arch")
-	channel, _ := cmd.Flags().GetString("channel")
-	version, _ := cmd.Flags().GetString("version")
-	imgType, _ := cmd.Flags().GetString("type")
-	endpoint := scheme + "://" + channel + "." + domain + "/" + arch + "-usr/" + version + "/"
-	uri := "flatcar_" + imgType + "_iso_image.iso"
-	url := endpoint + uri
-	slog.Info("Retrieving image remotely.", "url:", url)
+func Retrieve(url string) (string, error) {
+	slog.Info("Retrieving image remotely,", "url", url)
 
+	if url == "" {
+		return "", errors.New("empty url")
+	}
+
+	return url, nil
 	// // Check local cache first
 	// // If file exist don't do anything except telling user.
 	// if _, err := os.Stat(os.TempDir() + uri); err == nil {
